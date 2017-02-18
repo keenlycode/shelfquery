@@ -1,4 +1,4 @@
-import requests, dill, copy, asyncio, json
+import requests, dill, copy, asyncio
 from urllib.parse import urljoin
 
 
@@ -31,6 +31,9 @@ class ShelfQuery():
 
     def map(self, map_):
         return ChainQuery(self, {'map': map_})
+
+    def reduce(self, reduce_):
+        return ChainQuery(self, {'reduce': reduce_})
 
     def slice(self, start, stop, step=None):
         return ChainQuery(self, {'slice': [start, stop, step]})
