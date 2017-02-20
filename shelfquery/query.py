@@ -49,9 +49,6 @@ class ShelfQuery():
     def insert(self, entry):
         return ChainQuery(self, {'insert': entry})
 
-    def put(self, id_, entry):
-        return ChainQuery(self, {'put': (id_, entry)})
-
     def replace(self, entry):
         return ChainQuery(self, {'replace': entry})
 
