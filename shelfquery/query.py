@@ -1,5 +1,4 @@
-import requests, dill, copy, asyncio
-from urllib.parse import urljoin
+import dill, copy, asyncio
 
 
 def connect(addr='127.0.0.1', port=17000):
@@ -25,6 +24,9 @@ class ShelfQuery():
 
     def first(self, filter_):
         return ChainQuery(self, {'first': filter_})
+
+    def entry(self, fn):
+        return ChainQuery(self, {'entry': fn})
 
     def filter(self, filter_):
         return ChainQuery(self, {'filter': filter_})
