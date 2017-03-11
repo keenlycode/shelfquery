@@ -58,9 +58,11 @@ class ShelfQuery():
     def run(self):
         loop = asyncio.new_event_loop()
         asyncio.set_event_loop(loop)
-        return loop.run_until_complete(
+        result = loop.run_until_complete(
             asyncio.ensure_future(self.run_async())
         )
+        loop.close()
+        return result
 
     async def run_async(self):
         queries = self.queries.copy()
