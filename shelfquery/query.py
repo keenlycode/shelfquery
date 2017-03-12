@@ -1,12 +1,12 @@
 import dill, copy, asyncio
 
 
-def connect(addr='127.0.0.1', port=17000):
-    return DB(addr, port)
+def connect(host='127.0.0.1', port=17000):
+    return DB(host, port)
 
 class DB():
-    def __init__(self, addr, port):
-        self.addr = addr
+    def __init__(self, host, port):
+        self.host = host
         self.port = port
 
     def shelf(self, shelf_name):
@@ -69,7 +69,7 @@ class ShelfQuery():
         queries.insert(0, self.shelf)
         queries = dill.dumps(queries)
         reader, writer = await asyncio.open_connection(
-            self.db.addr,
+            self.db.host,
             self.db.port,)
         writer.write(queries)
         writer.write_eof()
