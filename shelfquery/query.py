@@ -28,10 +28,6 @@ class ShelfQuery():
         self.db = db
         self.shelf = shelf
         self.queries = []
-        if db._async is True:
-            self.run = self.run_async
-        else:
-            self.run = self.run_sync
 
     def get(self, id_):
         return ChainQuery(self, {'get': id_})
@@ -69,9 +65,11 @@ class ShelfQuery():
     def delete(self):
         return ChainQuery(self, 'delete')
 
-    def run(self):
-        # run() interface, choose whether run_sync or run_async on __init__()
-        raise NotImplementedError("This should be implemented on __init__()")
+    async def run(self):
+        if self.db._async is True:
+            return await self.run_async()
+        else:
+            return self.run_sync()
 
     def run_sync(self):
         loop = asyncio.new_event_loop()
