@@ -1,1 +1,1 @@
-from .query import connect
+from .query import db

@@ -1,16 +1,26 @@
 import dill, copy, asyncio
 
 
-def connect(host='127.0.0.1', port=17000):
+def db(host='127.0.0.1', port=17000):
     return DB(host, port)
 
+
 class DB():
-    def __init__(self, host, port):
+    def __init__(self, host='127.0.0.1', port=17000):
         self.host = host
         self.port = port
+        self._async = False
 
     def shelf(self, shelf_name):
         return ShelfQuery(copy.copy(self), shelf_name)
+
+    def async(self):
+        self._async = True
+        return self
+
+    def sync(self):
+        self._async = False
+        return self
 
 
 class ShelfQuery():
@@ -18,6 +28,10 @@ class ShelfQuery():
         self.db = db
         self.shelf = shelf
         self.queries = []
+        if db._async is True:
+            self.run = self.run_async
+        else:
+            self.run = self.run_sync
 
     def get(self, id_):
         return ChainQuery(self, {'get': id_})
@@ -56,6 +70,10 @@ class ShelfQuery():
         return ChainQuery(self, 'delete')
 
     def run(self):
+        # run() interface, choose whether run_sync or run_async on __init__()
+        raise NotImplementedError("This should be implemented on __init__()")
+
+    def run_sync(self):
         loop = asyncio.new_event_loop()
         asyncio.set_event_loop(loop)
         result = loop.run_until_complete(
@@ -77,6 +95,7 @@ class ShelfQuery():
         result = dill.loads(result)
         writer.close()
         return result
+
 
 class ChainQuery(ShelfQuery):
     def __init__(self, chain_query, query):
