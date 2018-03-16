@@ -28,6 +28,7 @@ class ShelfQuery():
         self.db = db
         self.shelf = shelf
         self.queries = []
+        self._make_run()
 
     def get(self, id_):
         return ChainQuery(self, {'get': id_})
@@ -65,12 +66,12 @@ class ShelfQuery():
     def delete(self):
         return ChainQuery(self, 'delete')
 
-    async def run(self):
+    def _make_run(self):
         if self.db._async is True:
-            return await self.run_async()
+            self.run = self.run_async
         else:
-            return self.run_sync()
-
+            self.run = self.run_sync
+            
     def run_sync(self):
         loop = asyncio.new_event_loop()
         asyncio.set_event_loop(loop)
@@ -101,3 +102,4 @@ class ChainQuery(ShelfQuery):
         self.shelf = chain_query.shelf
         self.queries = chain_query.queries.copy()
         self.queries.append(query)
+        self._make_run()
