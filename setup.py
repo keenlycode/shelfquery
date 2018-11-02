@@ -3,14 +3,14 @@ from setuptools import setup, find_packages
 
 setup(
     name='shelfquery',
-    version='1.0.3',
+    version='2.0.0',
     description='ShelfDB query client for using with `shelfdb` server',
     url='https://github.com/nitipit/shelfquery',
     author='Nitipit Nontasuwan',
     author_email='nitipit@gmail.com',
     license='MIT',
     classifiers=[
-        'Programming Language :: Python :: 3.6',
+        'Programming Language :: Python :: 3.7',
     ],
     keywords='shelfdb query client',
     packages=find_packages(),

@@ -14,7 +14,7 @@ class DB():
     def shelf(self, shelf_name):
         return ShelfQuery(copy.copy(self), shelf_name)
 
-    def async(self):
+    def asyncio(self):
         self._async = True
         return self
 
@@ -71,7 +71,7 @@ class ShelfQuery():
             self.run = self.run_async
         else:
             self.run = self.run_sync
-            
+
     def run_sync(self):
         loop = asyncio.new_event_loop()
         asyncio.set_event_loop(loop)
