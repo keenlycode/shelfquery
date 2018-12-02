@@ -30,20 +30,32 @@ class ShelfQuery():
         self.queries = []
         self._make_run()
 
+    def delete(self):
+        return ChainQuery(self, 'delete')
+
+    def entry(self, fn):
+        return ChainQuery(self, {'entry': fn})
+
     def get(self, id_):
         return ChainQuery(self, {'get': id_})
+
+    def filter(self, filter_):
+        return ChainQuery(self, {'filter': filter_})
 
     def first(self, filter_):
         return ChainQuery(self, {'first': filter_})
 
-    def filter(self, filter_):
-        return ChainQuery(self, {'filter': filter_})
+    def insert(self, entry):
+        return ChainQuery(self, {'insert': entry})
 
     def map(self, map_):
         return ChainQuery(self, {'map': map_})
 
     def reduce(self, reduce_):
         return ChainQuery(self, {'reduce': reduce_})
+
+    def replace(self, entry):
+        return ChainQuery(self, {'replace': entry})
 
     def slice(self, start, stop, step=None):
         return ChainQuery(self, {'slice': [start, stop, step]})
@@ -53,15 +65,6 @@ class ShelfQuery():
 
     def update(self, patch):
         return ChainQuery(self, {'update': patch})
-
-    def insert(self, entry):
-        return ChainQuery(self, {'insert': entry})
-
-    def replace(self, entry):
-        return ChainQuery(self, {'replace': entry})
-
-    def delete(self):
-        return ChainQuery(self, 'delete')
 
     def _make_run(self):
         if self.db._async is True:
