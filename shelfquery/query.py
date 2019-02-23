@@ -51,6 +51,9 @@ class ShelfQuery():
     def map(self, map_):
         return ChainQuery(self, {'map': map_})
 
+    def put(self, id_, entry):
+        return ChainQuery(self, {'put': [id_, entry]})
+
     def reduce(self, reduce_):
         return ChainQuery(self, {'reduce': reduce_})
 
