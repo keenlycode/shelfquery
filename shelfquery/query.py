@@ -42,7 +42,7 @@ class ShelfQuery():
     def filter(self, filter_):
         return ChainQuery(self, {'filter': filter_})
 
-    def first(self, filter_):
+    def first(self, filter_=None):
         return ChainQuery(self, {'first': filter_})
 
     def insert(self, entry):
