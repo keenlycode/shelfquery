@@ -9,9 +9,7 @@ setup(
     author='Nitipit Nontasuwan',
     author_email='nitipit@gmail.com',
     license='MIT',
-    classifiers=[
-        'Programming Language :: Python :: 3.7',
-    ],
+    classifiers=['Programming Language :: Python :: 3.7'],
     keywords='shelfdb query client',
     packages=find_packages(),
     install_requires=['dill==0.2.9',],
