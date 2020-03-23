@@ -52,11 +52,14 @@ class ShelfQuery():
         self.queries = []
         self._make_run()
 
+    def count(self):
+        return ChainQuery(self, 'count')
+
     def delete(self):
         return ChainQuery(self, 'delete')
 
-    def entry(self, fn):
-        return ChainQuery(self, {'entry': fn})
+    def edit(self, func):
+        return ChainQuery(self, {'edit': func})
 
     def get(self, id_):
         return ChainQuery(self, {'get': id_})
@@ -125,6 +128,8 @@ class ShelfQuery():
                 result[i] = Item(item[0], item[1])
         elif isinstance(result, tuple):
             result = Item(result[0], result[1])
+        elif isinstance(result, Exception):
+            raise result
         return result
 
 
