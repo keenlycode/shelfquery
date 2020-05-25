@@ -61,14 +61,14 @@ class ShelfQuery():
     def edit(self, func):
         return ChainQuery(self, {'edit': func})
 
-    def get(self, id_):
-        return ChainQuery(self, {'get': id_})
-
     def filter(self, filter_):
         return ChainQuery(self, {'filter': filter_})
 
     def first(self, filter_=None):
         return ChainQuery(self, {'first': filter_})
+
+    def get(self, id_):
+        return ChainQuery(self, {'get': id_})
 
     def insert(self, entry):
         return ChainQuery(self, {'insert': entry})
