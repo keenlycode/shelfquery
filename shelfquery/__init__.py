@@ -46,6 +46,7 @@ class Item(dict):
 
 
 class ShelfQuery():
+    """Construct queries to be send through network"""
     def __init__(self, db, shelf):
         self.db = db
         self.shelf = shelf
@@ -134,9 +135,14 @@ class ShelfQuery():
 
 
 class ChainQuery(ShelfQuery):
+    """ChainQuery to keep query state for each chain called from ShelfQuery"""
     def __init__(self, chain_query, query):
         self.db = chain_query.db
         self.shelf = chain_query.shelf
+
+        # use dict.copy() to prevent changes on previous state
+        # which might be used somewhere else.
         self.queries = chain_query.queries.copy()
+
         self.queries.append(query)
         self._make_run()
