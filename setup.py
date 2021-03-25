@@ -3,7 +3,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='shelfquery',
-    version='3.1.1dev',
+    version='3.1.2dev',
     description='ShelfDB query client for using with `shelfdb` server',
     url='https://github.com/nitipit/shelfquery',
     author='Nitipit Nontasuwan',
@@ -12,5 +12,5 @@ setup(
     classifiers=['Programming Language :: Python :: 3.7'],
     keywords='shelfdb query client',
     packages=find_packages(),
-    install_requires=['dill>=0.3.0'],
+    install_requires=['dill==0.3.3'],
 )
