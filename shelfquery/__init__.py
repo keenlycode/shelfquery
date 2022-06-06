@@ -53,6 +53,9 @@ class ShelfQuery():
         self.queries = []
         self._make_run()
 
+    def add(self, entry):
+        return ChainQuery(self, {'add': entry})
+
     def count(self):
         return ChainQuery(self, 'count')
 
