@@ -3,6 +3,7 @@ import copy
 import asyncio
 import uuid
 from datetime import datetime
+from warnings import warn
 
 
 def db(host='127.0.0.1', port=17000):
@@ -53,6 +54,9 @@ class ShelfQuery():
         self.queries = []
         self._make_run()
 
+    def add(self, entry):
+        return ChainQuery(self, {'add': entry})
+
     def count(self):
         return ChainQuery(self, 'count')
 
@@ -72,6 +76,7 @@ class ShelfQuery():
         return ChainQuery(self, {'get': id_})
 
     def insert(self, entry):
+        warn('`2022-06-06: insert()` is deprecated. Please use `add()`')
         return ChainQuery(self, {'insert': entry})
 
     def map(self, map_):
@@ -102,12 +107,7 @@ class ShelfQuery():
             self.run = self.run_sync
 
     def run_sync(self):
-        loop = asyncio.new_event_loop()
-        asyncio.set_event_loop(loop)
-        result = loop.run_until_complete(
-            asyncio.ensure_future(self.run_async())
-        )
-        loop.close()
+        result = asyncio.run(self.run_async())
         return result
 
     async def run_async(self):
