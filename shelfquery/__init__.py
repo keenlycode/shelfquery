@@ -3,6 +3,7 @@ import copy
 import asyncio
 import uuid
 from datetime import datetime
+from warnings import warn
 
 
 def db(host='127.0.0.1', port=17000):
@@ -75,6 +76,7 @@ class ShelfQuery():
         return ChainQuery(self, {'get': id_})
 
     def insert(self, entry):
+        warn('`2022-06-06: insert()` is deprecated. Please use `add()`')
         return ChainQuery(self, {'insert': entry})
 
     def map(self, map_):
