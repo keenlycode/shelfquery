@@ -82,6 +82,9 @@ class ShelfQuery():
     def map(self, map_):
         return ChainQuery(self, {'map': map_})
 
+    def patch(self, id_, entry):
+        return ChainQuery(self, {'patch': [id_, entry]})
+
     def put(self, id_, entry):
         return ChainQuery(self, {'put': [id_, entry]})
 
