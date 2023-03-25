@@ -114,9 +114,9 @@ class ShelfQuery():
         return result
 
     async def run_async(self):
-        queries = self.queries.copy()
+        queries = self.queries
         queries.insert(0, self.shelf)
-        queries = dill.dumps(queries)
+        queries = dill.dumps(queries, recurse=True)
         reader, writer = await asyncio.open_connection(
             self.db.host,
             self.db.port,)
